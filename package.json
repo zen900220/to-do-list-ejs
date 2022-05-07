@@ -9,6 +9,9 @@
   },
   "author": "Pratim",
   "license": "ISC",
+  "engines": {
+    "node": "16.13.1"
+  },
   "dependencies": {
     "ejs": "^3.1.6",
     "express": "^4.17.3",
