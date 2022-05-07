@@ -1,1 +1,5 @@
+#the database folder is only for local mongod server.
 database/
+
+#node_modules should not be uploaded to heroku remote as it installs dependencies on its own.
+node_modules/
