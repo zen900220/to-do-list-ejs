@@ -2,12 +2,26 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title></title>
+    <title>ToDoLu 📝</title>
+    <link rel="stylesheet" href="/css/styles_intro.css">
   </head>
   <body>
-    <form class="" action="/makeList" method="post">
-      <input type="text" name="listName" value="">
-      <button type="submit" name="">ADD</button>
-    </form>
+    <div class="box" id="title">
+      <h1>ToDoLu</h1>
+    </div>
+    <div class="box">
+      <form class="item newEntry" action="/makeList" method="post">
+        <input type="text" name="listName" value="" required placeholder="Name of List">
+        <button type="submit" name="">+</button>
+      </form>
+      <% for(var i=0;i<listNames.length;i++){ %>
+        <form class="item" action="/deleteList" method="post">
+          <!-- <div class="item"> -->
+            <input type="checkbox" name="listName" value="<%= listNames[i] %>" onchange="this.form.submit()">
+            <a href="/<%= listNames[i] %>"><%= listNames[i] %></a>
+          <!-- </div> -->
+        </form>
+      <% } %>
+    </div>
   </body>
 </html>

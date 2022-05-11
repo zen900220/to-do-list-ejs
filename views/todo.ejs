@@ -3,35 +3,33 @@
 
 <head>
   <meta charset="utf-8">
-  <title>ToDo List</title>
-  <link rel="stylesheet" href="css/styles.css">
+  <title>ToDoLu 📝</title>
+  <link rel="stylesheet" href="css/styles_todo.css">
 </head>
 
 <body>
 
   <div class="box" id="heading">
-    <h1> <%= title %> </h1>
+    <h1> <%= title %> <a href="/" class="home"><img src="icon/home.png" alt=""></a> </h1>
   </div>
 
   <div class="box">
     <% for(var i=0;i<list.length;i++){ %>
-    <form class="" action="/delete" method="post">
-      <div class="item">
+    <form class="item" action="/delete" method="post">
+      <!-- <div class="item"> -->
         <input type="checkbox" name="title" value="<%= title %>" onchange="this.form.submit()">
         <input type="hidden" name="content" value="<%= list[i] %>">
         <p> <%= list[i] %> </p>
-      </div>
+      <!-- </div> -->
     </form>
     <% } %>
 
-    <form class="item" action="/" method="post">
+    <form class="item newEntry" action="/" method="post">
       <input type="text" name="newItem" placeholder="New Item" autocomplete="off" required autofocus>
       <button type="submit" name="Add" value="<%= title %>">+</button>
     </form>
   </div>
-  <!-- <form class="" action="/reset_list" method="post">
-      <button type="submit" name="Reset">Reset</button>
-    </form> -->
+
 </body>
 
 </html>

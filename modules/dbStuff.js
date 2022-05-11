@@ -1,4 +1,6 @@
 const mongoose = require('mongoose');
+const {promiseStatus} = require('promise-status-async');
+
 
 const todoSchema=new mongoose.Schema({
   content:{type:String,required:true}
@@ -10,7 +12,7 @@ async function connect(uri){
   });
 }
 
-async function readCollection(collectionName){
+async function readFromCollection(collectionName){
   const todoModel=await mongoose.model("todoModel",todoSchema,collectionName);
   const docs=await todoModel.find({});
   let arr=[];
@@ -33,8 +35,20 @@ async function deleteFromCollection(collectionName,item){
   await todoModel.deleteOne({content:item});
 }
 
+//tht was hard af
+async function readCollections(){
+  const cols= await mongoose.connection.db.listCollections();
+  return cols;
+}
+
+async function deleteCollection(collectionName){
+  await mongoose.connection.db.dropCollection(collectionName);
+}
+
 //exports:
 module.exports.connect=connect;
-module.exports.readCollection=readCollection;
+module.exports.readFromCollection=readFromCollection;
 module.exports.addToCollection=addToCollection;
 module.exports.deleteFromCollection=deleteFromCollection;
+module.exports.readCollections=readCollections;
+module.exports.deleteCollection=deleteCollection;

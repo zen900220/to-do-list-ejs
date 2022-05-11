@@ -17,38 +17,54 @@ app.use(express.static("public"));
 
 let todoList=[];
 
-
-app.get("/",function(req,res){
-  res.render("intro");
+//this was fkin hard to do!!!
+app.get("/",async function(req,res){
+  let listArr=[];
+  dbStuff.readCollections().then(function(lists){
+    lists.toArray(function(err,collections){
+      if(err){
+        console.log(err);
+      }else{
+        collections.forEach(function(collection){
+          listArr.push(collection.name);
+        });
+        res.render("intro",{listNames:listArr});
+      }
+    })
+  })
 })
 
-app.post("/",async function(req,res){
+app.post("/",function(req,res){
   const item=req.body.newItem;
   const collection=req.body.Add;
-  await dbStuff.addToCollection(collection,item);
-  res.redirect("/"+collection);
+  dbStuff.addToCollection(collection,item).then(function(){
+    res.redirect("/"+collection);
+  })
 })
 
-app.get("/:listName",async function(req,res){
-  todoList=await dbStuff.readCollection(req.params.listName);
-  res.render("todo",{title:req.params.listName,list:todoList});
+app.get("/:listName",function(req,res){
+  dbStuff.readFromCollection(req.params.listName).then(function(todoList){
+    res.render("todo",{title:req.params.listName,list:todoList});
+  })
 })
 
 app.post("/makeList",function(req,res){
   res.redirect("/"+req.body.listName);
 })
 
-app.post("/delete",async function(req,res){
+app.post("/delete",function(req,res){
   const collection=req.body.title;
   const content=req.body.content;
-  await dbStuff.deleteFromCollection(collection,content);
-  res.redirect("/"+collection);
+  dbStuff.deleteFromCollection(collection,content).then(function(){
+    res.redirect("/"+collection);
+  })
 })
-
-// app.post("/reset_list",function(req,res){
-//   list=[];
-//   res.redirect("/");
-// });
+//complete this
+app.post("/deleteList",function(req,res){
+  dbStuff.deleteCollection(req.body.listName).then(function(){
+    res.redirect("/")
+  });
+})
 
 app.listen(process.env.PORT||3000,function(){
   console.log("Listening on port 3000");
