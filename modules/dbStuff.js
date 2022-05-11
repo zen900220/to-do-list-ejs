@@ -1,6 +1,4 @@
 const mongoose = require('mongoose');
-const {promiseStatus} = require('promise-status-async');
-
 
 const todoSchema=new mongoose.Schema({
   content:{type:String,required:true}
