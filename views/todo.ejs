@@ -16,11 +16,9 @@
   <div class="box">
     <% for(var i=0;i<list.length;i++){ %>
     <form class="item" action="/delete" method="post">
-      <!-- <div class="item"> -->
         <input type="checkbox" name="title" value="<%= title %>" onchange="this.form.submit()">
         <input type="hidden" name="content" value="<%= list[i] %>">
         <p> <%= list[i] %> </p>
-      <!-- </div> -->
     </form>
     <% } %>
 
